@@ -1,0 +1,185 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: DBFacker</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">garage</a> ]
+</div>
+
+<h1>Coverage Summary for Class: DBFacker (garage)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DBFacker</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (3/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    95%
+  </span>
+  <span class="absValue">
+    (19/ 20)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">DBFacker$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/ 4)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">DBFacker$1$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/ 4)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    83.3%
+  </span>
+  <span class="absValue">
+    (5/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    96.4%
+  </span>
+  <span class="absValue">
+    (27/ 28)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package garage;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import vehiculo.Vehiculo;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import java.util.HashMap;
+<i>6</i>&nbsp;import java.util.Map;
+<i>7</i>&nbsp;
+<b class="fc"><i>8</i>&nbsp;public class DBFacker implements GarageDB {</b>
+<i>9</i>&nbsp;
+<b class="fc"><i>10</i>&nbsp;    Map&lt;Integer, Map&lt;Integer, Object&gt;&gt; objects = new HashMap&lt;Integer, Map&lt;Integer, Object&gt;&gt;() {{</b>
+<b class="fc"><i>11</i>&nbsp;        for(int i = 1; i&lt;=4; i++){</b>
+<b class="fc"><i>12</i>&nbsp;            put(i, new HashMap&lt;Integer,Object&gt;(){{</b>
+<b class="fc"><i>13</i>&nbsp;                for(int j = 1; j&lt;=20; j++){</b>
+<b class="fc"><i>14</i>&nbsp;                    put(j,null);</b>
+<i>15</i>&nbsp;                }
+<b class="fc"><i>16</i>&nbsp;            }});</b>
+<i>17</i>&nbsp;        }
+<b class="fc"><i>18</i>&nbsp;    }};</b>
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    @Override
+<i>21</i>&nbsp;    public Vehiculo save(Integer piso, Integer lugar, Vehiculo vehiculo) {
+<b class="fc"><i>22</i>&nbsp;        if (!objects.containsKey(piso)) {</b>
+<b class="fc"><i>23</i>&nbsp;            throw new RuntimeException(&quot;No existe ese piso&quot;);</b>
+<i>24</i>&nbsp;        }
+<i>25</i>&nbsp;
+<b class="fc"><i>26</i>&nbsp;        if (!objects.get(piso).containsKey(lugar)) {</b>
+<b class="fc"><i>27</i>&nbsp;            throw new RuntimeException(&quot;No existe ese lugar&quot;);</b>
+<i>28</i>&nbsp;        }
+<i>29</i>&nbsp;
+<b class="fc"><i>30</i>&nbsp;        if (objects.get(piso).get(lugar) != null) {</b>
+<b class="fc"><i>31</i>&nbsp;            throw new RuntimeException(&quot;Ya existe un vehiculo en esa posicion. &quot; + searchForSpot());</b>
+<i>32</i>&nbsp;        }
+<b class="fc"><i>33</i>&nbsp;        objects.get(piso).put(lugar,vehiculo);</b>
+<b class="fc"><i>34</i>&nbsp;        return vehiculo;</b>
+<i>35</i>&nbsp;    }
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;    @Override
+<i>38</i>&nbsp;    public Vehiculo getSpotConent(Integer piso, Integer lugar) {
+<b class="nc"><i>39</i>&nbsp;        return (Vehiculo) objects.get(piso).get(lugar);</b>
+<i>40</i>&nbsp;    }
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    @Override
+<i>44</i>&nbsp;    public String searchForSpot(){
+<b class="fc"><i>45</i>&nbsp;        String message = null;</b>
+<b class="fc"><i>46</i>&nbsp;        for (Map.Entry&lt;Integer, Map&lt;Integer, Object&gt;&gt; set1 : objects.entrySet()) {</b>
+<b class="fc"><i>47</i>&nbsp;            for(Map.Entry&lt;Integer,Object&gt; set2 : set1.getValue().entrySet()) {</b>
+<b class="fc"><i>48</i>&nbsp;                if(set2.getValue() == null){</b>
+<b class="fc"><i>49</i>&nbsp;                    message =  &quot;Posicion libre en piso: &quot; + set1.getKey() + &quot;, lugar: &quot; + set2.getKey();</b>
+<b class="fc"><i>50</i>&nbsp;                    break;</b>
+<i>51</i>&nbsp;                }
+<b class="fc"><i>52</i>&nbsp;            }</b>
+<b class="fc"><i>53</i>&nbsp;        }</b>
+<b class="fc"><i>54</i>&nbsp;        return message;</b>
+<i>55</i>&nbsp;    }
+<i>56</i>&nbsp;}
+<i>57</i>&nbsp;;
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-04-25 21:12</div>
+</div>
+</body>
+</html>
